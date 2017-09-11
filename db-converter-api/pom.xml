@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>sample</groupId>
+        <artifactId>db-converter</artifactId>
+        <version>0.5.0-SNAPSHOT</version>
+        <relativePath>..</relativePath>
+    </parent>
+
+    <artifactId>db-converter-api</artifactId>
+    <packaging>war</packaging>
+
+    <properties>
+        <webApp.filename>${project.artifactId}</webApp.filename>
+    </properties>
+
+    <dependencies>
+        <!-- BEGIN Compile scope -->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- END Compile scope -->
+
+        <!-- BEGIN Provided scope -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- BEGIN Test scope -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- END Test scope -->
+    </dependencies>
+
+    <build>
+        <finalName>${webApp.filename}</finalName>
+               <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>executable</classifier>
+                            <layout>ZIP</layout>
+                            <executable>true</executable>
+                            <mainClass>sample.DbConvApiApp</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jvmArguments>
+                        -Dspring.profiles.active=jpa,local
+                    </jvmArguments>
+                </configuration>
+            </plugin>
+
+
+        </plugins>
+    </build>
+
+</project>
